@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.13.150
+ Source Server         : 192.168.11.152
  Source Server Type    : MySQL
  Source Server Version : 80020
- Source Host           : 192.168.13.150:3306
- Source Schema         : laravel
+ Source Host           : 192.168.11.152:3306
+ Source Schema         : pets_development
 
  Target Server Type    : MySQL
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 20/08/2020 17:17:03
+ Date: 08/01/2021 22:03:57
 */
 
 SET NAMES utf8mb4;
@@ -216,6 +216,31 @@ CREATE TABLE `admin_users` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `admin_users` VALUES (1, 'admin', '$2y$10$7gApqiKCdrZ9FZ7pS/4LDuS42THItSoeTvJuslb.KmhyODjSRzj2a', 'Administrator', NULL, NULL, '2020-08-20 09:14:57', '2020-08-20 09:14:57');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for appointment
+-- ----------------------------
+DROP TABLE IF EXISTS `appointment`;
+CREATE TABLE `appointment` (
+  `id` bigint unsigned NOT NULL COMMENT 'bigint的id，需自行设置',
+  `user_name` varchar(255) COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '用户名称',
+  `user_phone` varchar(255) COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '用户手机',
+  `user_gender` int DEFAULT NULL COMMENT '1:男, 2:女',
+  `pre_time` datetime DEFAULT NULL COMMENT '预约时间',
+  `arrived_time` datetime DEFAULT NULL COMMENT '到店时间',
+  `end_time` datetime DEFAULT NULL COMMENT '服务完成时间',
+  `total_time` datetime DEFAULT NULL COMMENT '服务花费时间',
+  `status` int DEFAULT NULL COMMENT '1:已预约, 2:服务中, 3:已完成, 4已取消',
+  `pets_type` int DEFAULT NULL COMMENT '1:猫, 2:狗',
+  `service_type` int DEFAULT NULL COMMENT '1:洗, 2:美, 3:寄',
+  `description` varchar(255) COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '描述信息'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of appointment
+-- ----------------------------
+BEGIN;
 COMMIT;
 
 -- ----------------------------
