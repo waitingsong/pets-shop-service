@@ -40,7 +40,7 @@ export class AppointmentService {
 
     // 模糊匹配id
     if (filter.id) {
-      where.id = Like(filter.id);
+      where.id = Like(`%${filter.id}`);
     }
 
     // 模糊匹配名称

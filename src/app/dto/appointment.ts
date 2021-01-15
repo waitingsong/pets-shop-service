@@ -14,19 +14,19 @@ export class QueryDTO {
   pageSize?: number;
 
   @CreateApiPropertyDoc('筛选字段-id')
-  @Rule(RuleType.string().trim().max(19).optional())
+  @Rule(RuleType.string().trim().max(19).optional().allow(''))
   id?: string;
 
   @CreateApiPropertyDoc('筛选字段-名称')
-  @Rule(RuleType.string().trim().max(50).optional())
+  @Rule(RuleType.string().trim().max(50).optional().allow(''))
   userName?: string;
 
   @CreateApiPropertyDoc('筛选字段-联系电话')
-  @Rule(RuleType.string().trim().max(11).optional())
+  @Rule(RuleType.string().trim().max(11).optional().allow(''))
   userPhone?: string;
 
   @CreateApiPropertyDoc('筛选字段-服务状态')
-  @Rule(RuleType.string().trim().max(1).optional())
+  @Rule(RuleType.string().trim().max(1).optional().allow(''))
   status?: string;
 
   @CreateApiPropertyDoc(
