@@ -14,7 +14,7 @@ export class QueryDTO {
   pageSize?: number;
 
   @CreateApiPropertyDoc('筛选字段-id')
-  @Rule(RuleType.string().trim().max(10).optional())
+  @Rule(RuleType.string().trim().max(19).optional())
   id?: string;
 
   @CreateApiPropertyDoc('筛选字段-名称')
@@ -22,7 +22,7 @@ export class QueryDTO {
   userName?: string;
 
   @CreateApiPropertyDoc('筛选字段-联系电话')
-  @Rule(RuleType.string().trim().max(50).optional())
+  @Rule(RuleType.string().trim().max(11).optional())
   userPhone?: string;
 
   @CreateApiPropertyDoc(
@@ -53,7 +53,9 @@ export class ShowDTO {
  */
 export class RemoveDTO {
   @CreateApiPropertyDoc('预约单id的数组')
-  @Rule(RuleType.array().items(RuleType.string().trim().max(19)).min(1))
+  @Rule(
+    RuleType.array().items(RuleType.string().trim().max(19)).min(1).required()
+  )
   ids: string[];
 }
 
@@ -70,7 +72,7 @@ export class CreateDTO {
   userPhone: string;
 
   @CreateApiPropertyDoc('客户性别')
-  @Rule(RuleType.string().max(1))
+  @Rule(RuleType.number().max(999))
   userGenderType: number;
 
   @CreateApiPropertyDoc('预约时间')
@@ -78,11 +80,11 @@ export class CreateDTO {
   preTime: Date;
 
   @CreateApiPropertyDoc('宠物类型')
-  @Rule(RuleType.string().max(1).required())
+  @Rule(RuleType.number().max(999).required())
   petsType: number;
 
   @CreateApiPropertyDoc('服务类型')
-  @Rule(RuleType.string().max(1).required())
+  @Rule(RuleType.number().max(999).required())
   serviceType: number;
 
   @CreateApiPropertyDoc('描述')
@@ -99,31 +101,31 @@ export class UpdateDTO {
   id: string;
 
   @CreateApiPropertyDoc('客户姓名')
-  @Rule(RuleType.string().trim().max(50).required())
+  @Rule(RuleType.string().trim().max(50).optional())
   userName: string;
 
   @CreateApiPropertyDoc('联系电话')
-  @Rule(RuleType.string().trim().max(11).required())
+  @Rule(RuleType.string().trim().max(11).optional())
   userPhone: string;
 
   @CreateApiPropertyDoc('客户性别')
-  @Rule(RuleType.number().max(1))
+  @Rule(RuleType.number().max(999).optional())
   userGenderType: number;
 
   @CreateApiPropertyDoc('预约时间')
-  @Rule(RuleType.date())
+  @Rule(RuleType.date().optional())
   preTime: Date;
 
   @CreateApiPropertyDoc('宠物类型')
-  @Rule(RuleType.number().max(1).required())
+  @Rule(RuleType.number().max(999).optional())
   petsType: number;
 
   @CreateApiPropertyDoc('服务类型')
-  @Rule(RuleType.number().max(1).required())
+  @Rule(RuleType.number().max(999).optional())
   serviceType: number;
 
   @CreateApiPropertyDoc('描述')
-  @Rule(RuleType.string().trim().max(255).optional)
+  @Rule(RuleType.string().trim().max(255).optional())
   description: string;
 }
 
@@ -136,6 +138,6 @@ export class ProgressDTO {
   id: string;
 
   @CreateApiPropertyDoc('状态，(1:已预约, 2:服务中, 3:已完成, 4已取消)')
-  @Rule(RuleType.number().max(1))
+  @Rule(RuleType.number().max(999).required())
   status: number;
 }

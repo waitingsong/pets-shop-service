@@ -29,12 +29,13 @@ export class AppointmentService {
   async queryAppointment(params: QueryDTO) {
     const { pageSize, current, sorter, ...filter } = params;
     const where: any = {};
-    const order: any = { id: 'DESC' };
+    const order: any = { createdAt: 'DESC' };
 
     // 排序方式
     if (sorter) {
+      delete order.createdAt;
       const [column, sort] = sorter.split('_');
-      order[column] = sort;
+      order[column] = sort.split('end')[0].toUpperCase();
     }
 
     // 模糊匹配id
@@ -86,9 +87,13 @@ export class AppointmentService {
   async createAppointment(params: CreateDTO) {
     const id = this.koid.next.readBigInt64BE().toString();
     let record = new AppointmentModel();
-    record = this.appointmentModel.merge(record, params, { id });
-    const created = await this.appointmentModel.create(record);
-    return created;
+    record.updatedAt = new Date();
+    record.createdAt = new Date();
+    record.status = 1;
+    record = this.appointmentModel.merge(record, { ...params, id });
+    const created = await this.appointmentModel.save(record);
+
+    return { ...created, id };
   }
 
   /**
@@ -146,10 +151,22 @@ export class AppointmentService {
    */
   async progressAppointment(params: ProgressDTO) {
     const { id, ...columns } = params;
+    const current = await this.getAppointmentById(id);
+
+    // 到店
+    if (columns.status === 2) {
+      current.arrivedTime = new Date();
+    }
+
+    // 完成服务
+    if (columns.status === 3) {
+      current.endTime = new Date();
+    }
+
     return this.appointmentModel
       .createQueryBuilder()
       .update()
-      .set(columns)
+      .set({ ...columns, status: columns.status })
       .where('id = :id', { id })
       .execute();
   }

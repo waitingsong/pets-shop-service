@@ -106,7 +106,7 @@ export class AppointmentController {
     await this.service.checkAppointmentExists([params.id]);
 
     const total = await this.service.progressAppointment(params);
-    assert(total, new MyError('删除失败，请检查', 400));
+    assert(total, new MyError('扭转状态失败，请检查', 400));
 
     ctx.helper.success(null, null, 204);
   }
