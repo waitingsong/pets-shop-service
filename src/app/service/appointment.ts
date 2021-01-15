@@ -166,7 +166,7 @@ export class AppointmentService {
     return this.appointmentModel
       .createQueryBuilder()
       .update()
-      .set({ ...columns, status: columns.status })
+      .set({ ...current, status: columns.status })
       .where('id = :id', { id })
       .execute();
   }
