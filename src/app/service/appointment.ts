@@ -52,6 +52,11 @@ export class AppointmentService {
     if (filter.userPhone) {
       where.userPhone = Like(`${filter.userPhone}%`);
     }
+
+    // 模糊匹配服务状态
+    if (filter.status) {
+      where.status = Like(`${filter.status}%`);
+    }
     const [list, total] = await this.appointmentModel.findAndCount({
       where,
       order,

@@ -25,6 +25,10 @@ export class QueryDTO {
   @Rule(RuleType.string().trim().max(11).optional())
   userPhone?: string;
 
+  @CreateApiPropertyDoc('筛选字段-服务状态')
+  @Rule(RuleType.string().trim().max(1).optional())
+  status?: string;
+
   @CreateApiPropertyDoc(
     '排序字段，以字段名加下划线组合，不能有特殊字符和不存在的字段。例如: name_ascend 或者 name_descend'
   )
