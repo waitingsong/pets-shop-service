@@ -18,7 +18,7 @@ export class AppointmentModel extends BaseModel {
   @Column({
     type: 'varchar',
     length: 190,
-    comment: '用户名称',
+    comment: '客户名称',
     name: 'user_name',
   })
   userName: string;
@@ -27,19 +27,18 @@ export class AppointmentModel extends BaseModel {
     type: 'varchar',
     length: 60,
     nullable: true,
-    comment: '用户手机',
+    comment: '联系电话',
     name: 'user_phone',
   })
   userPhone: string;
 
   @Column({
-    type: 'varchar',
-    length: 60,
+    type: 'integer',
     nullable: true,
-    comment: '用户性别',
-    name: 'user_gender',
+    comment: '客户性别',
+    name: 'user_gender_type',
   })
-  userGender: string;
+  userGenderType: number;
 
   @Column({
     type: 'datetime',

@@ -32,7 +32,7 @@ import MyError from '../util/my-error';
   description: '包含预约单的增、删、改、查',
 })
 export class AppointmentController {
-  @Inject('adminPermissionService')
+  @Inject('appointmentService')
   service: AppointmentService;
 
   @Get('/query', {
@@ -63,7 +63,6 @@ export class AppointmentController {
   @Validate()
   async create(ctx: Context, @Body(ALL) params: CreateDTO) {
     const result = await this.service.createAppointment(params);
-
     ctx.helper.success(result, null, 201);
   }
 

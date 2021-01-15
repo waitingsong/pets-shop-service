@@ -1,8 +1,9 @@
 import * as assert from 'assert';
 
-import { Provide } from '@midwayjs/decorator';
+import { Provide, Plugin } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/orm';
 import { Repository, Like, In } from 'typeorm';
+import type { Koid } from 'egg-koid';
 
 import { AppointmentModel } from '../model/appointment';
 import {
@@ -17,6 +18,9 @@ import MyError from '../util/my-error';
 export class AppointmentService {
   @InjectEntityModel(AppointmentModel)
   appointmentModel: Repository<AppointmentModel>;
+
+  @Plugin()
+  koid: Koid;
 
   /**
    * 分页查询预约单列表
@@ -39,8 +43,13 @@ export class AppointmentService {
     }
 
     // 模糊匹配名称
-    if (filter.nameName) {
-      where.nameName = Like(`${filter.nameName}%`);
+    if (filter.userName) {
+      where.userName = Like(`${filter.userName}%`);
+    }
+
+    // 模糊匹配名称
+    if (filter.userPhone) {
+      where.userPhone = Like(`${filter.userPhone}%`);
     }
     const [list, total] = await this.appointmentModel.findAndCount({
       where,
@@ -75,10 +84,10 @@ export class AppointmentService {
    * @param {CreateDTO} params 预约单参数
    */
   async createAppointment(params: CreateDTO) {
+    const id = this.koid.next.readBigInt64BE().toString();
     let record = new AppointmentModel();
-    record = this.appointmentModel.merge(record, params);
-
-    const created = await this.appointmentModel.save(record);
+    record = this.appointmentModel.merge(record, params, { id });
+    const created = await this.appointmentModel.create(record);
     return created;
   }
 

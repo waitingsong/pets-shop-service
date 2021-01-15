@@ -19,17 +19,22 @@ export class QueryDTO {
 
   @CreateApiPropertyDoc('筛选字段-名称')
   @Rule(RuleType.string().trim().max(50).optional())
-  nameName?: string;
+  userName?: string;
+
+  @CreateApiPropertyDoc('筛选字段-联系电话')
+  @Rule(RuleType.string().trim().max(50).optional())
+  userPhone?: string;
 
   @CreateApiPropertyDoc(
-    '排序字段，以字段名加下划线组合，不能有特殊字符和不存在的字段。例如: name_ASC 或者 name_DESC'
+    '排序字段，以字段名加下划线组合，不能有特殊字符和不存在的字段。例如: name_ascend 或者 name_descend'
   )
   @Rule(
     RuleType.string()
       .trim()
       .max(50)
-      .regex(/^[a-zA-Z]*(_ASC|_DESC)$/)
+      .regex(/^[a-zA-Z]*(_ascend|_descend)$/)
       .optional()
+      .allow('')
   )
   sorter?: string;
 }
@@ -39,7 +44,7 @@ export class QueryDTO {
  */
 export class ShowDTO {
   @CreateApiPropertyDoc('预约单的id')
-  @Rule(RuleType.string().trim().max(10).required())
+  @Rule(RuleType.string().trim().max(19).required())
   id: string;
 }
 
@@ -48,7 +53,7 @@ export class ShowDTO {
  */
 export class RemoveDTO {
   @CreateApiPropertyDoc('预约单id的数组')
-  @Rule(RuleType.array().items(RuleType.string().trim().max(10)).min(1))
+  @Rule(RuleType.array().items(RuleType.string().trim().max(19)).min(1))
   ids: string[];
 }
 
@@ -56,16 +61,16 @@ export class RemoveDTO {
  * 创建预约单参数
  */
 export class CreateDTO {
-  @CreateApiPropertyDoc('用户姓名')
+  @CreateApiPropertyDoc('客户姓名')
   @Rule(RuleType.string().trim().max(50).required())
   userName: string;
 
-  @CreateApiPropertyDoc('用户手机')
+  @CreateApiPropertyDoc('联系电话')
   @Rule(RuleType.string().trim().max(11).required())
   userPhone: string;
 
-  @CreateApiPropertyDoc('用户性别')
-  @Rule(RuleType.number().max(1))
+  @CreateApiPropertyDoc('客户性别')
+  @Rule(RuleType.string().max(1))
   userGenderType: number;
 
   @CreateApiPropertyDoc('预约时间')
@@ -73,12 +78,16 @@ export class CreateDTO {
   preTime: Date;
 
   @CreateApiPropertyDoc('宠物类型')
-  @Rule(RuleType.number().max(1).required())
+  @Rule(RuleType.string().max(1).required())
   petsType: number;
 
   @CreateApiPropertyDoc('服务类型')
-  @Rule(RuleType.number().max(1).required())
+  @Rule(RuleType.string().max(1).required())
   serviceType: number;
+
+  @CreateApiPropertyDoc('描述')
+  @Rule(RuleType.string().trim().max(255).optional())
+  description: string;
 }
 
 /**
@@ -86,18 +95,18 @@ export class CreateDTO {
  */
 export class UpdateDTO {
   @CreateApiPropertyDoc('预约单的id')
-  @Rule(RuleType.string().trim().max(10).required())
+  @Rule(RuleType.string().trim().max(19).required())
   id: string;
 
-  @CreateApiPropertyDoc('用户姓名')
+  @CreateApiPropertyDoc('客户姓名')
   @Rule(RuleType.string().trim().max(50).required())
   userName: string;
 
-  @CreateApiPropertyDoc('用户手机')
+  @CreateApiPropertyDoc('联系电话')
   @Rule(RuleType.string().trim().max(11).required())
   userPhone: string;
 
-  @CreateApiPropertyDoc('用户性别')
+  @CreateApiPropertyDoc('客户性别')
   @Rule(RuleType.number().max(1))
   userGenderType: number;
 
@@ -112,6 +121,10 @@ export class UpdateDTO {
   @CreateApiPropertyDoc('服务类型')
   @Rule(RuleType.number().max(1).required())
   serviceType: number;
+
+  @CreateApiPropertyDoc('描述')
+  @Rule(RuleType.string().trim().max(255).optional)
+  description: string;
 }
 
 /**
@@ -119,7 +132,7 @@ export class UpdateDTO {
  */
 export class ProgressDTO {
   @CreateApiPropertyDoc('预约单的id')
-  @Rule(RuleType.string().trim().max(10).required())
+  @Rule(RuleType.string().trim().max(19).required())
   id: string;
 
   @CreateApiPropertyDoc('状态，(1:已预约, 2:服务中, 3:已完成, 4已取消)')
