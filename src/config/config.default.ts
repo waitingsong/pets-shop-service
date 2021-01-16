@@ -18,6 +18,10 @@ export default (appInfo: EggAppInfo): DefaultConfig => {
     password: 'admin',
   };
 
+  config.security = {
+    csrf: false,
+  };
+
   // 数据库配置
   config.orm = {
     type: 'mysql',

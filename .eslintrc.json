@@ -41,6 +41,7 @@
         "newlines-between": "always"
       }
     ],
-    "no-console": [2, { "allow": ["warn", "error", "info"] } ]
+    "no-console": [2, { "allow": ["warn", "error", "info"] } ],
+    "@typescript-eslint/explicit-module-boundary-types": 0
   }
 }
